@@ -1,16 +1,39 @@
 #!/bin/sh
 
-# $1 is the docker repo
-# $2 openshift project (default is testproject)
-# $3 server template (currently assumes you're in the oshinko-rest dir, which probably isn't true for anyone but me
+# $1 openshift project (default is testproject)
+# $2 server template (currently assumes default one in this dir) 
 
-REPO=$1
-PROJECT=${2:-testproject}
-TEMPLATE=${3:-tools/server-ui-template.yaml}
+oc login -u system:admin > /dev/null
+oc project default > /dev/null 2>&1
+REGIP=`oc get svc docker-registry | grep docker-registry | sed 's/\s\+/ /g' | cut -d' ' -f2`
+REPO=$REGIP:5000
+
+
+
+PROJECT=${1:-testproject}
+TEMPLATE=${2:-server-ui-template.yaml}
+
+
+oc login -u croberts -p test
+oc project $PROJECT
 
 IPADDR=`hostname  -I | cut -f1 -d' '`
 
 oc process -f $TEMPLATE -v OSHINKO_CLUSTER_IMAGE=$REPO/$PROJECT/oshinko-spark,OSHINKO_WEB_IMAGE=$REPO/$PROJECT/oshinko-web,OSHINKO_SERVER_IMAGE=$REPO/$PROJECT/oshinko-rest,OSHINKO_WEB_EXTERNAL_IP=oshinkoweb.$IPADDR.xip.io > server-ui-template.json
+
+
+cat <<EOF > sa.json
+{
+    "apiVersion": "v1",
+    "kind": "ServiceAccount",
+    "metadata": {
+      "name": "oshinko"
+    }
+}
+EOF
+oc create -f sa.json
+oc policy add-role-to-user admin system:serviceaccount:$PROJECT:oshinko -n $PROJECT
+
 
 
 oc create -f server-ui-template.json

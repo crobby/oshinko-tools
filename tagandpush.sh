@@ -6,13 +6,29 @@
 PROJECT=${1:-testproject}
 
 oc login -u system:admin > /dev/null
-oc project default > /dev/null &2>1
+oc project default > /dev/null 2>&1
 REGIP=`oc get svc docker-registry | grep docker-registry | sed 's/\s\+/ /g' | cut -d' ' -f2`
 REPO=$REGIP:5000
+
+oc login -u croberts -p test
+TOKEN=`oc whoami -t`
+
+oc new-project $PROJECT
+oc login -u system:admin
+oc project default
+oadm policy add-role-to-user system:registry croberts
+oadm policy add-role-to-user admin croberts -n $PROJECT     
+oadm policy add-role-to-user system:image-builder croberts
+
+
+docker login -u croberts -e me@mine.com -p $TOKEN $REPO
+
 
 ## uncomment this if you want to be able to just pass in your own repo
 # REPO = $2 
 
+#oc login -u croberts -p test
+#oc project $PROJECT
 
 docker pull crobby/oshinko-web
 docker pull crobby/oshinko-rest
