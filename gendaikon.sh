@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# $1 openshift project (default is testproject)
+# $1 openshift project (default is oshinko)
 # $2 server template (currently assumes default one in this dir) 
 
 oc login -u system:admin > /dev/null
@@ -10,11 +10,11 @@ REPO=$REGIP:5000
 
 
 
-PROJECT=${1:-testproject}
+PROJECT=${1:-oshinko}
 TEMPLATE=${2:-server-ui-template.yaml}
 
 
-oc login -u croberts -p test
+oc login -u oshinko -p test
 oc project $PROJECT
 
 IPADDR=`hostname  -I | cut -f1 -d' '`
