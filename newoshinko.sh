@@ -20,3 +20,6 @@ OSHINKO_WEB_IMAGE=$REGISTRY/oshinko/oshinko-webui \
 OSHINKO_WEB_EXTERNAL_IP=mywebui.$WEBROUTEIP.xip.io > oshinko-template.json
 oc create -f oshinko-template.json
 
+REST_SERVICE=`oc get svc | grep oshinko-rest | cut -d' ' -f1`
+
+oc expose service $REST_SERVICE --hostname=oshinko-rest.$WEBROUTEIP.xip.io
