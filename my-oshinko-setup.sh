@@ -105,3 +105,8 @@ OSHINKO_WEB_EXTERNAL_IP=mywebui.$WEBROUTEIP.xip.io > $CURRDIR/oshinko-template.j
 oc create -f $CURRDIR/oshinko-template.json
 
 oc create -f $SRCDIR/oshinko-s2i/pyspark/pysparkjob.json
+oc create -f $SRCDIR/oshinko-s2i/pyspark/pysparkbuildonly.json
+oc create -f $SRCDIR/oshinko-s2i/pyspark/pysparkdc.json
+oc create -f $SRCDIR/oshinko-s2i/pyspark/pysparkdconly.json
+oc create -f $SRCDIR/oshinko-s2i/pyspark/pysparkjobonly.json
+
