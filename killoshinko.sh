@@ -1,5 +1,5 @@
-oc login -u oshinko -p oshinko
-oc project oshinko
+oc login -u croberts -p oshinko
+oc project croshinko
 
 oc delete deploymentconfigs --all
 oc delete services --all

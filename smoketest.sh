@@ -14,8 +14,8 @@ PAUSEFORENV=${2:-60}
 WORKERDEPLOYMENT="${CLUSTERNAME}-w"
 SPARKMASTER="${CLUSTERNAME}:7077"
 
-oc login -u oshinko -p oshinko
-oc project oshinko
+oc login -u croberts -p oshinko
+oc project croshinko
 
 ## using oc set env since setting it on the exec command wasn't working
 echo Going to run run the following commands:
