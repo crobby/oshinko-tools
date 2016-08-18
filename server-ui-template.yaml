@@ -92,7 +92,15 @@ objects:
               - name: o-web-port
                 containerPort: 8080
                 protocol: TCP
-
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /
+                port: 8080
+                scheme: HTTP
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 1
 - kind: Service
   apiVersion: v1
   metadata:

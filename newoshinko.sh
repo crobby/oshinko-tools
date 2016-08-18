@@ -17,7 +17,7 @@ oc process -f $2 \
 OSHINKO_SERVER_IMAGE=$REGISTRY/oshinko/oshinko-rest-server \
 OSHINKO_CLUSTER_IMAGE=$REGISTRY/oshinko/xpaas-spark \
 OSHINKO_WEB_IMAGE=$REGISTRY/oshinko/oshinko-webui \
-OSHINKO_WEB_ROUTE_HOSTNAME=mywebui.$WEBROUTEIP.xip.io > oshinko-template.json
+OSHINKO_WEB_EXTERNAL_IP=mywebui.$WEBROUTEIP.xip.io > oshinko-template.json
 oc create -f oshinko-template.json
 
 REST_SERVICE=`oc get svc | grep oshinko-rest | cut -d' ' -f1`
