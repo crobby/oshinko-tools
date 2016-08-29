@@ -8,9 +8,9 @@
             "kind": "Service",
             "metadata": {
                 "labels": {
-                    "name": "oshinko-rest-1jtn"
+                    "name": "oshinko-rest-vcuf"
                 },
-                "name": "oshinko-rest-1jtn"
+                "name": "oshinko-rest-vcuf"
             },
             "spec": {
                 "ports": [
@@ -22,7 +22,7 @@
                     }
                 ],
                 "selector": {
-                    "name": "oshinko-rest-1jtn"
+                    "name": "oshinko-rest-vcuf"
                 }
             }
         },
@@ -30,12 +30,12 @@
             "apiVersion": "v1",
             "kind": "DeploymentConfig",
             "metadata": {
-                "name": "oshinko-rest-1jtn"
+                "name": "oshinko-rest-vcuf"
             },
             "spec": {
                 "replicas": 1,
                 "selector": {
-                    "name": "oshinko-rest-1jtn"
+                    "name": "oshinko-rest-vcuf"
                 },
                 "strategy": {
                     "type": "Rolling"
@@ -43,7 +43,7 @@
                 "template": {
                     "metadata": {
                         "labels": {
-                            "name": "oshinko-rest-1jtn"
+                            "name": "oshinko-rest-vcuf"
                         }
                     },
                     "spec": {
@@ -72,15 +72,15 @@
                                     },
                                     {
                                         "name": "OSHINKO_CLUSTER_IMAGE",
-                                        "value": "172.30.242.71:5000/croshinko/xpaas-spark"
+                                        "value": "172.30.242.71:5000/croshinko/openshift-spark"
                                     },
                                     {
                                         "name": "OSHINKO_WEB_NAME",
-                                        "value": "oshinko-web-5ief"
+                                        "value": "oshinko-web-s212"
                                     }
                                 ],
                                 "image": "172.30.242.71:5000/croshinko/oshinko-rest",
-                                "name": "oshinko-rest-1jtn",
+                                "name": "oshinko-rest-vcuf",
                                 "ports": [
                                     {
                                         "containerPort": 8080,
@@ -105,14 +105,14 @@
             "kind": "DeploymentConfig",
             "metadata": {
                 "labels": {
-                    "name": "oshinko-web-5ief"
+                    "name": "oshinko-web-s212"
                 },
-                "name": "oshinko-web-5ief"
+                "name": "oshinko-web-s212"
             },
             "spec": {
                 "replicas": 1,
                 "selector": {
-                    "name": "oshinko-web-5ief"
+                    "name": "oshinko-web-s212"
                 },
                 "strategy": {
                     "type": "Rolling"
@@ -120,7 +120,7 @@
                 "template": {
                     "metadata": {
                         "labels": {
-                            "name": "oshinko-web-5ief"
+                            "name": "oshinko-web-s212"
                         }
                     },
                     "spec": {
@@ -129,7 +129,7 @@
                                 "env": [
                                     {
                                         "name": "OPENSHIFT_OSHINKO_REST",
-                                        "value": "oshinko-rest-1jtn"
+                                        "value": "oshinko-rest-vcuf"
                                     },
                                     {
                                         "name": "OPENSHIFT_OSHINKO_REST_PORT",
@@ -137,7 +137,7 @@
                                     }
                                 ],
                                 "image": "172.30.242.71:5000/croshinko/oshinko-web",
-                                "name": "oshinko-web-5ief",
+                                "name": "oshinko-web-s212",
                                 "ports": [
                                     {
                                         "containerPort": 8080,
@@ -161,10 +161,10 @@
             "kind": "Service",
             "metadata": {
                 "labels": {
-                    "name": "oshinko-web-5ief",
-                    "restname": "oshinko-rest-1jtn"
+                    "name": "oshinko-web-s212",
+                    "restname": "oshinko-rest-vcuf"
                 },
-                "name": "oshinko-web-5ief"
+                "name": "oshinko-web-s212"
             },
             "spec": {
                 "ports": [
@@ -176,7 +176,7 @@
                     }
                 ],
                 "selector": {
-                    "name": "oshinko-web-5ief"
+                    "name": "oshinko-web-s212"
                 }
             }
         },
@@ -184,13 +184,13 @@
             "apiVersion": "v1",
             "kind": "Route",
             "metadata": {
-                "name": "oshinko-web-5ief"
+                "name": "oshinko-web-s212"
             },
             "spec": {
                 "host": "mywebui.10.19.47.7.xip.io",
                 "to": {
                     "kind": "Service",
-                    "name": "oshinko-web-5ief"
+                    "name": "oshinko-web-s212"
                 }
             }
         }

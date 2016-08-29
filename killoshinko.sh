@@ -1,4 +1,4 @@
-oc login -u croberts -p oshinko
+oc login -u croberts -p croberts
 oc project croshinko
 
 oc delete deploymentconfigs --all

@@ -11,12 +11,15 @@ WEBROUTEIP=$1
 TEMPLATE=$2
 PROJECT=$3
 
-oc login -u croberts -p oshinko
+oc login -u croberts -p croberts
 oc project $PROJECT
+
+
+#OSHINKO_CLUSTER_IMAGE=$REGISTRY/$PROJECT/xpaas-spark \
 
 oc process -f $2 \
 OSHINKO_SERVER_IMAGE=$REGISTRY/$PROJECT/oshinko-rest \
-OSHINKO_CLUSTER_IMAGE=$REGISTRY/$PROJECT/xpaas-spark \
+OSHINKO_CLUSTER_IMAGE=$REGISTRY/$PROJECT/openshift-spark \
 OSHINKO_WEB_IMAGE=$REGISTRY/$PROJECT/oshinko-web \
 OSHINKO_WEB_EXTERNAL_IP=mywebui.$WEBROUTEIP.xip.io > oshinko-template.json
 oc create -f oshinko-template.json
@@ -24,3 +27,7 @@ oc create -f oshinko-template.json
 REST_SERVICE=`oc get svc | grep oshinko-rest | cut -d' ' -f1`
 
 oc expose service $REST_SERVICE --hostname=oshinko-rest.$WEBROUTEIP.xip.io
+oc create -f ../oshinko-s2i/pyspark/pysparkbuilddc.json 
+oc create -f ../oshinko-s2i/pyspark/pysparkbuild.json
+oc create -f ../oshinko-s2i/pyspark/pysparkdc.json
+oc create -f ../oshinko-s2i/pyspark/pysparkjob.json
