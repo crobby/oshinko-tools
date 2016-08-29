@@ -11,6 +11,8 @@ WEBROUTEIP=$1
 TEMPLATE=$2
 PROJECT=$3
 
+oadm policy add-role-to-user system:image-builder croberts
+
 oc login -u croberts -p croberts
 oc project $PROJECT
 
