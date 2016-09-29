@@ -28,4 +28,4 @@ WORKERPOD=`oc get pods | grep -m 1 "${CLUSTERNAME}-w" | sed 's/\s\+/ /g' | cut -
 echo "Going to run smoke test on POD: $WORKERPOD"
 echo "oc exec ${WORKERPOD} -- spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.0-preview.jar 100"
 
-oc exec ${WORKERPOD} -- /opt/spark/bin/spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.0-preview.jar 100
+oc exec ${WORKERPOD} -- /opt/spark/bin/spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.0.jar 100

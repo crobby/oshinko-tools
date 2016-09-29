@@ -6,4 +6,6 @@ oc delete services --all
 oc delete pods --all
 oc delete routes --all
 oc delete jobs --all
+oc delete builds --all
+oc delete templates --all
 
