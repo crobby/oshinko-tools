@@ -26,16 +26,16 @@ SRCDIR=$CURRDIR/oshinko/src/github.com/redhatanalytics
 mkdir -p $SRCDIR
 cd $SRCDIR
 if [ ! -d "oshinko-rest" ]; then
-    git clone git@github.com:redhatanalytics/oshinko-rest
+    git clone git@github.com:radanalyticsio/oshinko-rest
 fi
 if [ ! -d "oshinko-webui" ]; then
-    git clone git@github.com:redhatanalytics/oshinko-webui
+    git clone git@github.com:radanalyticsio/oshinko-webui
 fi
 if [ ! -d "openshift-spark" ]; then
-    git clone git@github.com:redhatanalytics/openshift-spark
+    git clone git@github.com:radanalyticsio/openshift-spark
 fi
 if [ ! -d "oshinko-s2i" ]; then
-    git clone git@github.com:redhatanalytics/oshinko-s2i
+    git clone git@github.com:radanalyticsio/oshinko-s2i
 fi
 
 cd $SRCDIR/oshinko-rest; sudo make image
@@ -49,14 +49,14 @@ cd $SRCDIR/openshift-spark; sudo make build
 ########### get the origin image and run oc cluster up
 ########### this part can be replaced with some other openshift install recipe
 
-if [ ! -d "openshift-spark" ]; then
-    wget https://github.com/openshift/origin/releases/download/v1.3.0-alpha.2/openshift-origin-server-v1.3.0-alpha.2-983578e-linux-64bit.tar.gz
-    tar -xvzf openshift-origin-server-v1.3.0-alpha.2-983578e-linux-64bit.tar.gz
-    sudo cp openshift-origin-server-v1.3.0-alpha.2-983578e-linux-64bit/* /usr/bin
-fi
+#if [ ! -d "openshift-spark" ]; then
+#    wget https://github.com/openshift/origin/releases/download/v1.3.0-alpha.2/openshift-origin-server-v1.3.0-alpha.2-983578e-linux-64bit.tar.gz
+#    tar -xvzf openshift-origin-server-v1.3.0-alpha.2-983578e-linux-64bit.tar.gz
+#    sudo cp openshift-origin-server-v1.3.0-alpha.2-983578e-linux-64bit/* /usr/bin
+#fi
 
-sudo sed -i "s/# INSECURE_REGISTRY='--insecure-registry '/INSECURE_REGISTRY='--insecure-registry 172.30.0.0\/16'/" /etc/sysconfig/docker
-sudo systemctl restart docker
+#sudo sed -i "s/# INSECURE_REGISTRY='--insecure-registry '/INSECURE_REGISTRY='--insecure-registry 172.30.0.0\/16'/" /etc/sysconfig/docker
+#sudo systemctl restart docker
 
 # make sure your local host name can be resolved!
 # put it in /etc/hosts if you have to, otherwise you will have no nodes
