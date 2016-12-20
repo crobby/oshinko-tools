@@ -14,8 +14,8 @@ PAUSEFORENV=${2:-60}
 WORKERDEPLOYMENT="${CLUSTERNAME}-w"
 SPARKMASTER="${CLUSTERNAME}:7077"
 
-oc login -u oshinko -p oshinko
-oc project oshinko
+oc login -u developer -p dev
+oc project myproject
 
 ## using oc set env since setting it on the exec command wasn't working
 echo Going to run run the following commands:
@@ -28,4 +28,4 @@ WORKERPOD=`oc get pods | grep -m 1 "${CLUSTERNAME}-w" | sed 's/\s\+/ /g' | cut -
 echo "Going to run smoke test on POD: $WORKERPOD"
 echo "oc exec ${WORKERPOD} -- spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100"
 
-oc exec ${WORKERPOD} -- /opt/spark/bin/spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100
+oc exec ${WORKERPOD} -- /opt/spark/bin/spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 500
