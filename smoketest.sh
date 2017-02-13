@@ -12,20 +12,22 @@
 CLUSTERNAME=$1
 PAUSEFORENV=${2:-60}
 WORKERDEPLOYMENT="${CLUSTERNAME}-w"
-SPARKMASTER="${CLUSTERNAME}:7077"
+#SPARKMASTER="${CLUSTERNAME}:7077"
 
 oc login -u developer -p dev
 oc project myproject
 
 ## using oc set env since setting it on the exec command wasn't working
-echo Going to run run the following commands:
-echo "oc set env dc/$WORKERDEPLOYMENT SPARK_USER=chad"
+#echo Going to run run the following commands:
+#echo "oc set env dc/$WORKERDEPLOYMENT SPARK_USER=chad"
 
-oc set env dc/$WORKERDEPLOYMENT SPARK_USER=chad
-echo "Waiting $PAUSEFORENV seconds for environment variable update to go through"
+#oc set env dc/$WORKERDEPLOYMENT SPARK_USER=chad
+echo "Waiting $PAUSEFORENV seconds"
 sleep $PAUSEFORENV
 WORKERPOD=`oc get pods | grep -m 1 "${CLUSTERNAME}-w" | sed 's/\s\+/ /g' | cut -d' ' -f1`
 echo "Going to run smoke test on POD: $WORKERPOD"
-echo "oc exec ${WORKERPOD} -- spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 100"
+oc cp ./runit.sh $WORKERPOD:/tmp/
+echo "oc exec ${WORKERPOD} -- /tmp/runit.sh"
 
-oc exec ${WORKERPOD} -- /opt/spark/bin/spark-submit --master spark://$SPARKMASTER  --class org.apache.spark.examples.SparkPi /opt/spark/examples/jars/spark-examples_2.11-2.0.1.jar 500
+oc exec ${WORKERPOD} -- /tmp/runit.sh
+
