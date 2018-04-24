@@ -10,11 +10,11 @@
 
 
 CLUSTERNAME=$1
+PROJECT=$2
 WORKERDEPLOYMENT="${CLUSTERNAME}-w"
-#SPARKMASTER="${CLUSTERNAME}:7077"
 
 oc login -u developer -p dev
-oc project myproject
+oc project ${2-myproject}
 
 WORKERPOD=`oc get pods | grep -m 1 "${CLUSTERNAME}-w" | sed 's/\s\+/ /g' | cut -d' ' -f1`
 echo "Going to run smoke test on POD: $WORKERPOD"
